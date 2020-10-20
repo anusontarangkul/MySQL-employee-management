@@ -14,6 +14,25 @@ const connection = mysql.createConnection({
 
 connection.connect(err => {
     if (err) throw err;
-    console.log("connected as id " + connection.threadId + "\n");
+    start();
 
 });
+
+function start() {
+    inquirer
+        .prompt({
+            name: "homeDirectory",
+            type: "list",
+            message: "What would you like to do?",
+            choices: ["Add departments, roles, employees", "View departments, roles, employees", "Update employee roles"]
+        })
+        .then(answer => {
+            switch (answer.homeDirectory) {
+                case "Add departments, roles, employees":
+                    addToTable();
+                    break;
+            }
+        })
+}
+
+function addToTable() { };
