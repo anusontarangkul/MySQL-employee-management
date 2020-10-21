@@ -2,7 +2,7 @@
 const inquirer = require("inquirer");
 const db = require("./db")
 require("console.table")
-// const connection = require("./connection");
+
 
 
 const mysql = require("mysql");
@@ -24,10 +24,10 @@ connection.connect(err => {
     start()
 })
 
-connection.query = util.promisify(connection.query)
+connection.query = util.promisify(connection.query);
 
 
-    ;
+
 
 function start() {
     inquirer
@@ -35,7 +35,7 @@ function start() {
             name: "homeDirectory",
             type: "list",
             message: "What would you like to do?",
-            choices: ["View All Employees", "Add Employee", "Update Employee Role", "View All Roles", "Add Role", , "Add Department", "View All Departments"]
+            choices: ["View All Employees", "Add Employee", "Update Employee Role", "View All Roles", "Add Role", "Add Department", "View All Departments"]
         })
         .then(answer => {
             switch (answer.homeDirectory) {
@@ -63,11 +63,6 @@ function start() {
             }
         })
 }
-
-// async function viewAllEmployees() {
-//     var query = await "SELECT * FROM employee_managementDB.employee";
-//     console.log(connection.query(query))
-// }
 
 async function viewAllEmployees() {
     const employees = await db.findAllEmployees();
@@ -203,6 +198,7 @@ async function updateEmployeeRole() {
             ], (err, res) => {
                 console.log(`succesful update for ${answer.updateEmployee}`)
             })
+            start();
         })
 
 };

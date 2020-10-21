@@ -9,7 +9,6 @@ CREATE TABLE department (
   PRIMARY KEY (id)
 );
 
-SELECT * FROM department;
 
 CREATE TABLE role (
   id INT NOT NULL AUTO_INCREMENT,
@@ -27,3 +26,4 @@ CREATE TABLE employee(
   manager_id INT,
   PRIMARY KEY (id)
 );
+
