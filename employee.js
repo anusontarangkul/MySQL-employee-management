@@ -172,5 +172,37 @@ async function addRole() {
 
 }
 
-function updateEmployeeRole() { };
+async function updateEmployeeRole() {
+    const employee = await db.findAllEmployees();
+    const avaialbeEmployees = [];
+    for (let i = 0; i < employee.length; i++) {
+        avaialbeEmployees.push(employee[i].first_name)
+    }
+    inquirer
+        .prompt([
+            {
+                name: "updateEmployee",
+                type: "list",
+                message: "Which employee would you like to update?",
+                choices: avaialbeEmployees
+            },
+            {
+                name: "newRole",
+                type: "input",
+                message: "What is the new role of the employee?"
+            }
+        ]).then(answer => {
+            let sql = "UPDATE employee SET ? WHERE ?";
+            connection.query([
+                {
+                    role_id: answer.newRole
+                },
+                {
+                    first_name: answer.updateEmployee
+                }
+            ], (err, res) => {
+                console.log(`succesful update for ${answer.updateEmployee}`)
+            })
+        })
 
+};
