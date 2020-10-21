@@ -7,11 +7,12 @@ class DB {
     findAllEmployees() {
         return this.connection.query("SELECT * FROM employee_managementDB.employee")
     }
-    addEmployeeDB() {
-        return this.connection.query("INSERT INTO employee SET ?")
-
+    findAllDepartments() {
+        return this.connection.query("SELECT * FROM employee_managementDB.department")
     }
-
+    findAllRoles() {
+        return this.connection.query("SELECT * FROM employee_managementDB.role")
+    }
 
 }
 
