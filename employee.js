@@ -1,22 +1,10 @@
-const mysql = require("mysql");
+
 const inquirer = require("inquirer");
+const db = require("./db")
+require("console.table")
 
-const connection = mysql.createConnection({
-    host: "localhost",
 
-    port: 3306,
-
-    user: "root",
-
-    password: "password",
-    database: "employee_managementDB"
-});
-
-connection.connect(err => {
-    if (err) throw err;
-    start();
-
-});
+start();
 
 function start() {
     inquirer
@@ -24,15 +12,18 @@ function start() {
             name: "homeDirectory",
             type: "list",
             message: "What would you like to do?",
-            choices: ["Add departments, roles, employees", "View departments, roles, employees", "Update employee roles"]
+            choices: ["View All Employees", "View All Employees By Department", "View All Employees By Manager", "Add Employee", "Remove Employee", "Update Employee Role", "Update Employee Manager", "View All Roles", "Add Role", "Remove Role"]
         })
         .then(answer => {
             switch (answer.homeDirectory) {
-                case "Add departments, roles, employees":
-                    addToTable();
+                case "View All Employees":
+                    viewAllEmployees();
                     break;
             }
         })
 }
 
-function addToTable() { };
+async function viewAllEmployees() {
+    const employees = await db.findAllEmployees();
+    console.table(employees)
+};

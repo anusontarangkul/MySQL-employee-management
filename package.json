@@ -18,8 +18,10 @@
   },
   "homepage": "https://github.com/anusontarangkul/employee-management#readme",
   "dependencies": {
+    "console.table": "^0.10.0",
     "express": "^4.17.1",
     "inquirer": "^7.3.3",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "table": "^6.0.3"
   }
 }
