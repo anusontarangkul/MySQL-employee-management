@@ -35,7 +35,7 @@ function start() {
             name: "homeDirectory",
             type: "list",
             message: "What would you like to do?",
-            choices: ["View All Employees", "View All Employees By Department", "View All Employees By Manager", "Add Employee", "Remove Employee", "Update Employee Role", "Update Employee Manager", "View All Roles", "Add Role", "Remove Role", "Add Department", "View All Departments"]
+            choices: ["View All Employees", "Add Employee", "Update Employee Role", "View All Roles", "Add Role", , "Add Department", "View All Departments"]
         })
         .then(answer => {
             switch (answer.homeDirectory) {
@@ -56,6 +56,9 @@ function start() {
                     break;
                 case "View All Roles":
                     viewAllRoles();
+                    break;
+                case "Update Employee Role":
+                    updateEmployeeRole();
                     break;
             }
         })
@@ -114,6 +117,7 @@ function addEmployee() {
             connection.query(sql, [answer.employeeFirstName, answer.employeeLastName, answer.roleID, answer.managerID], (err, res) => {
                 console.log("successful entry")
             })
+            start();
         })
 }
 
@@ -129,10 +133,16 @@ function addDepartment() {
             connection.query(sql, answer.departmentName, (err, res) => {
                 console.log(`successful entry of department ${answer.departmentName}!`)
             })
+            start();
         })
 }
 
-function addRole() {
+async function addRole() {
+    const roles = await db.findAllRoles();
+    const avaialbeDepartments = [];
+    for (let i = 0; i < roles.length; i++) {
+        avaialbeDepartments.push(roles[i].id)
+    }
     inquirer
         .prompt([
             {
@@ -147,8 +157,9 @@ function addRole() {
             },
             {
                 name: "roleDepartment",
-                type: "input",
-                message: "What is the department of the role?"
+                type: "list",
+                message: "What is the department of the role?",
+                choices: avaialbeDepartments
             }
         ])
         .then(answer => {
@@ -156,7 +167,10 @@ function addRole() {
             connection.query(sql, [answer.roleTitle, answer.roleSalary, answer.roleDepartment], (err, res) => {
                 console.log(`successful entry of the role "${answer.roleTitle}!"`)
             })
+            start();
         })
 
 }
+
+function updateEmployeeRole() { };
 
